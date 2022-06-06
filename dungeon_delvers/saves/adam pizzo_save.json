@@ -1,0 +1,45 @@
+{
+    "name": "Adam Pizzo",
+    "attributes": {
+        "power": {
+            "score": 17,
+            "base": 16,
+            "modifier": 3,
+            "racial_modifier": 1
+        },
+        "agility": {
+            "score": 18,
+            "base": 17,
+            "modifier": 4,
+            "racial_modifier": 1
+        },
+        "toughness": {
+            "score": 15,
+            "base": 14,
+            "modifier": 2,
+            "racial_modifier": 1
+        },
+        "guile": {
+            "score": 13,
+            "base": 12,
+            "modifier": 1,
+            "racial_modifier": 1
+        },
+        "luck": {
+            "score": 15,
+            "base": 14,
+            "modifier": 2,
+            "racial_modifier": 1
+        }
+    },
+    "race": {
+        "name": "human"
+    },
+    "job": {
+        "rogue": {
+            "name": "rogue",
+            "level": 1
+        }
+    },
+    "exp": 0
+}
