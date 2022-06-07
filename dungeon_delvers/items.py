@@ -127,5 +127,39 @@ class Shield(Armor):
         self.stats['type'] = 'shield'
 
 
-def create_item():
-    pass
+def generate_item():
+    quality_range = [
+        'dilapidated',
+        'damaged',
+        'subpar',
+        'normal',
+        'fine',
+        'superior',
+        'masterwork'
+    ]
+    rarity_range = [
+        'common',
+        'uncommon',
+        'rare',
+        'epic',
+        'legendary',
+        'artifact'
+    ]
+    item_type = [
+        'potion',
+        'scroll',
+        'art',
+        'gem',
+        'weapon',
+        'armor',
+        'shield',
+        'trade good',
+        'ring',
+        'amulet',
+    ]
+    dilapidated_weight = 2
+    damaged_weight = 10
+    subpair_weight = 20
+    normal_weight_min = 21
+    normal_weight_max = 79
+
