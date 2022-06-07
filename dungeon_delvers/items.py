@@ -1,28 +1,41 @@
 class Item():
     def __init__(self, *args, **kwargs):
         rarity_range = {
-                'common': 0,
-                'uncommon': 1,
-                'rare': 2,
-                'epic': 3,
-                'legendary': 4,
-                'artifact': 5
-            }
+            'common': 0,
+            'uncommon': 1,
+            'rare': 2,
+            'epic': 3,
+            'legendary': 4,
+            'artifact': 5
+        }
         quality_range = {
-                'dilapidated': -3,
-                'damaged': -2,
-                'subpar': -1,
-                'normal': 0,
-                'fine': 1,
-                'superior': 2,
-                'masterwork': 3
-            }
+            'dilapidated': -3,
+            'damaged': -2,
+            'subpar': -1,
+            'normal': 0,
+            'fine': 1,
+            'superior': 2,
+            'masterwork': 3
+        }
+        item_type = [
+            'potion',
+            'scroll',
+            'art',
+            'gem',
+            'weapon',
+            'armor',
+            'shield',
+            'trade good',
+            'ring',
+            'amulet',
+
+        ]
         self.stats = {
             'name': kwargs['name'],
             'id': '',
             'description': kwargs['description'],
             'abilities': kwargs['abilities'],
-            'cost': {
+            'value': {
                 'platinum': kwargs['pp'],
                 'gold': kwargs['gp'],
                 'electrum': kwargs['ep'],
@@ -31,21 +44,24 @@ class Item():
             },
             'type': '',
             'is_magic': False,
-            'rarity': kwargs['rarity'],
-            'quality': kwargs['quality'],
+            'rarity': rarity_range[kwargs['rarity']],
+            'quality': quality_range[kwargs['quality']],
             'weight': kwargs['weight']
-            
+
         }
         if self.stats['is_magic']:
             self.stats['magic_level'] = self.stats['rarity']
 
+
 class Weapon(Item):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.stats['type'] = 'weapon'
         self.stats['damage_min_dice'] = 1
         self.stats['damage_max_dice'] = kwargs['damage_max_dice']
-        self.stats['material'] = kwargs['material']  # Mithral, Adamantite, Silver, Gold
-        
+        # Mithral, Adamantite, Silver, Gold
+        self.stats['material'] = kwargs['material']
+
         if self.stats['material'] == 'mithril':
             self.stats['weight'] = self.stats['weight'] // 2
             self.stats['abilities'] = 'mithril_weapon'
@@ -57,15 +73,59 @@ class Weapon(Item):
             self.stats['abilities'] = 'gold_weapon'
 
 
-
-
 class Armor(Item):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.stats['type'] = 'armor'
 
 
 class Ring(Item):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.stats['type'] = 'ring'
 
 
 class Amulet(Item):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.stats['type'] = 'amulet'
+
+
+class Potion(Item):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.stats['type'] = 'potion'
+
+
+class Scroll(Item):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.stats['type'] = 'scroll'
+
+
+class Art(Item):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.stats['type'] = 'art'
+
+
+class Gem(Item):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.stats['type'] = 'gem'
+
+
+class TradeGood(Item):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.stats['type'] = 'trade_good'
+
+
+class Shield(Armor):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.stats['type'] = 'shield'
+
+
+def create_item():
     pass
