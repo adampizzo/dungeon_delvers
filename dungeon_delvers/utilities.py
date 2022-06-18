@@ -2,8 +2,10 @@ import os
 # from dungeon_delvers import race
 # from dungeon_delvers import job
 from dungeon_delvers.race import Human, Dwarf, Elf, Gnome, Halfling, Halfelf, Halforc
-from dungeon_delvers.job import Fighter, Barbarian, Cleric, Rogue, Sorcerer
+from dungeon_delvers.job import Fighter, Rogue, Monk, Paladin
+# from job import Fighter, Barbarian, Paladin, Rogue, Wizard, Monk
 # from dungeon_delvers.base import Player
+
 
 def get_selection(choices, e):
     while True:
