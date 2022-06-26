@@ -1,8 +1,6 @@
-import pprint
 from colorama import Fore, Style
 from random import randint, random, choice
 from time import sleep
-from typing import Type
 
 from dungeon_delvers.utilities import print_sep, clr
 from dungeon_delvers.job import Fighter, Paladin
@@ -108,7 +106,7 @@ class Entity:
                         if self.attributes["agility"]["modifier"] > 2:
                             max_bonus = 2
                         else:
-                            max_bonus = self.attributes["agilitiy"]["modifier"]
+                            max_bonus = self.attributes["agility"]["modifier"]
                         self.armor_class = (
                             10 + self.equipped_items[item].armor_class + max_bonus
                         )

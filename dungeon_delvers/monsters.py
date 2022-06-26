@@ -14,6 +14,7 @@ class Monster(ddb.Entity):
         classification = {
             "minion": {
                 "name": f"{Fore.BLACK}{Back.WHITE}{Style.BRIGHT}Minion{Style.RESET_ALL}",
+                "display_name": "minion",
                 "cr_mod": -1,
                 "max_hp": 1,
                 "stat_mod": -4,
@@ -26,6 +27,7 @@ class Monster(ddb.Entity):
             },
             "standard": {
                 "name": f"{Fore.BLACK}{Back.GREEN}{Style.BRIGHT}Standard{Style.RESET_ALL}",
+                "display_name": "standard",
                 "cr_mod": 0,
                 "max_hp": 1,
                 "stat_mod": 0,
@@ -38,6 +40,7 @@ class Monster(ddb.Entity):
             },
             "elite": {
                 "name": f"{Fore.BLACK}{Back.BLUE}{Style.BRIGHT}Elite{Style.RESET_ALL}",
+                "display_name": "elite",
                 "cr_mod": 1,
                 "max_hp": 2,
                 "stat_mod": 2,
@@ -50,6 +53,7 @@ class Monster(ddb.Entity):
             },
             "champion": {
                 "name": f"{Fore.BLACK}{Back.YELLOW}{Style.BRIGHT}Champion{Style.RESET_ALL}",
+                "display_name": "champion",
                 "cr_mod": 2,
                 "max_hp": 3,
                 "stat_mod": 4,
@@ -62,6 +66,7 @@ class Monster(ddb.Entity):
             },
             "boss": {
                 "name": f"{Fore.BLACK}{Back.RED}{Style.BRIGHT}Boss{Style.RESET_ALL}",
+                "display_name": "boss",
                 "cr_mod": 3,
                 "max_hp": 4,
                 "stat_mod": 6,
@@ -79,6 +84,7 @@ class Monster(ddb.Entity):
                 {
                     "unique": {
                         "name": f"{Fore.BLACK}{Back.MAGENTA}Unique{Style.RESET_ALL}",
+                        "display_name": "unique",
                         "cr_mod": kwargs["unique_cr_mod"],
                         "max_hp": kwargs["unique_hp_mod"],
                         "stat_mod": kwargs["unique_stat_mod"],

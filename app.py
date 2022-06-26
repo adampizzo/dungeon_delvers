@@ -1,6 +1,7 @@
 from copy import copy, deepcopy
 import inspect
 from math import ceil
+import os
 from string import punctuation
 from random import randint, choice
 from time import sleep
@@ -517,9 +518,6 @@ class Game:
         for atr in self.pkl_loader(
             f"dungeon_delvers/saves/hero/{character_name}_save.pkl"
         ):
-            print(f"Object = {atr}")
-            print(f"Vars = {vars(atr)}")
-            print(f"Name: {atr.name}")
             return atr
 
     def load_party(self, party_name):
@@ -919,28 +917,52 @@ class Battle:
 
 
 class GenerateEnemy:
-    def __init__(self, party_cr):
-        # self.enemy_list = {
-        #     '0': ['human_commoner', 'elven_commoner', 'dwarven_commoner', 'halfelf_commoner', 'gnomish_commoner', 'halforc_commoner'],
-        #     '0.125': ['human_tribal_warrior', 'human_noble', 'dwarven_noble', 'elven_noble', 'human_guard', 'elven_guard', 'dwarven_guard', 'halforc_guard', 'halfelf_guard', 'halfling_guard', 'human_cultist', 'halfelven_cultist', 'halfling_cultist', 'gnomish_cultist'],
-        #     '0.25': ['human']
-        # }
-        self.enemy_list = {
-            0: [],
-            0.125: ["goblin_minion"],
-            0.25: ["goblin_standard"],
-            0.5: [],
-        }
-        name = input("Input the name of your enemy")
-        type = input("What kind of monster is it?")
-        str_ = input("What is the strength of the monster?")
-        agi = input("What is the agility of the monster?")
-        int_ = input("What is the intellect of the monster?")
-        luck = input("What is the luck of the monster?")
-        hp = input("What is the hp of the monster?")
-        classification = input("What is the classification of the monster? (minion, standard, elite, champion, boss")
-        
-        
+    def generate_enemy(self):
+        classification_options = ["minion", "standard", "elite", "champion", "boss"]
+        name = input("Input the name of your enemy: ")
+        type = input("What kind of monster is it: ")
+        str_ = int(input("What is the strength of the monster: "))
+        agi = int(input("What is the agility of the monster: "))
+        int_ = int(input("What is the intellect of the monster: "))
+        luck = int(input("What is the luck of the monster: "))
+        hit_dice_type = int(
+            input("What is the hit dice of the monster (Max HP of the dice): ")
+        )
+        hit_dice_num_base = int(input("How many hit dice does the monster have: "))
+        challenge_rating = float(input("What is the challenge rating of the monster: "))
+        for classification in classification_options:
+            name_monster = construct_class(
+                type.title(),
+                name=name.title(),
+                strength=str_,
+                agility=agi,
+                intellect=int_,
+                luck=luck,
+                hit_dice_type=hit_dice_type,
+                hit_dice_num_base=hit_dice_num_base,
+                classification=classification,
+                cr=challenge_rating,
+            )
+            self.save_enemy(name_monster, name)
+            print(name_monster)
+
+    def fmt_save_load(self, name):
+        if " " in name:
+            name = name.lower().split(" ")
+            name = "_".join(name)
+        if "-" in name:
+            name = name.lower().replace("-", "_")
+        else:
+            name = name.lower()
+        return name
+
+    def save_enemy(self, enemy, enemy_name):
+        enemy_name = self.fmt_save_load(enemy_name)
+        with open(
+            f"dungeon_delvers/enemies/{enemy_name}_{enemy.classification['display_name']}.pkl",
+            "wb",
+        ) as f:
+            pickle.dump(enemy, f, -1)
 
 
 class Party:
@@ -948,6 +970,7 @@ class Party:
         self.members = party
         self.name = name
         self.size = len(self.members)
+        self.party_items = []
         self.monsters_killed = {
             "abberation": 0,
             "beast": 0,
@@ -965,6 +988,11 @@ class Party:
             "plant": 0,
             "undead": 0,
         }
+        self.cr = 0
+        party_levels = 0
+        for member in self.members:
+            party_levels += member.job.level
+        # self.cr = party_levels // self.size
 
     def display_party(self):
         party_obj = f"{self.name}"
@@ -978,8 +1006,31 @@ class Party:
             \r{*self.members,}"""
 
 
+class EnemyParty:
+    def __init__(self, party_cr) -> None:
+        self.members = []
+        # TODO Create a way to load a party based on a CR rating.
+        # Load all pkl files in the enemies folder into memory
+        # Get their challenge ratings and build a party that is +/- the party CR.
+        directory_ = "dungeon_delvers/enemies"
+        for filename in os.scandir(directory_):
+            if filename.is_file():
+                self.pkl_loader(filename)
+
+    def pkl_loader(self, file):
+        with open(file, "rb") as f:
+            while True:
+                try:
+                    yield pickle.load(f)
+                except EOFError:
+                    break
+
+
 if __name__ == "__main__":
     game = Game()
+    # enemy_generator = GenerateEnemy()
+    # enemy_generator.generate_enemy()
+
     # new_mon = Goblinoid(
     #     name="Murzod",
     #     strength=14,
